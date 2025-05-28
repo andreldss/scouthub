@@ -4,6 +4,7 @@ import Button from "../ui/button"
 import { useRouter } from 'next/navigation'
 import { register } from "@/app/lib/auth/register"
 import { useState } from "react"
+import toast, { Toaster } from 'react-hot-toast';
 
 
 export default function Register() {
@@ -26,8 +27,23 @@ export default function Register() {
             return;
         }
 
+        setError('');
+
+        const promise = register(name, email, password);
+
+        toast.promise(promise, {
+            loading: 'Espere um momento...',
+            success: `Conta criada com sucesso! Verfique seu e-mail para ativar sua conta.` ,
+            error: 'Erro ao registrar. Verifique os dados.',
+        }, {
+            success: {
+                duration: 6000,
+            }
+        });
+
         try{
-            await register(name, email, password);
+            await promise;
+            router.push('/')
         }    catch (err: any) {
 
             switch (err.code) {
@@ -64,6 +80,9 @@ export default function Register() {
                     <Button variant="primary" className="w-full" onClick={() => router.push('/')}>Ja tenho conta</Button>
                 </div>
             </div>
+            <Toaster 
+            position="top-right"
+            />
         </div>
     )
 }
