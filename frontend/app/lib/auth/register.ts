@@ -10,7 +10,6 @@ export const register = async (name: string, email: string, password: string) =>
     await setDoc(doc(db, "users", user.uid), {
         name,
         email,
-        emailVerified: false,
         createdAt: new Date(),
     });
 

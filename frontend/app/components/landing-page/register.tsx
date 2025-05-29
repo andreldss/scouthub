@@ -75,7 +75,7 @@ export default function Register() {
                 <span>Confirmar senha</span>
                 <TextInput placeholder="Confirmar senha" type="password" value={confirmpassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                 <div className="flex flex-col gap-2 mt-5 items-center">
-                    {error && <p className="text-[#6e0e13] font-bold text">{error}</p>}
+                    {error && <p className="text-[#6e0e13] font-bold text-center">{error}</p>}
                     <Button variant="primary" className="w-full" onClick={handleRegister}>Criar conta</Button>
                     <Button variant="primary" className="w-full" onClick={() => router.push('/')}>Ja tenho conta</Button>
                 </div>
