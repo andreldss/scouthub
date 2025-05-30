@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib/utlils";
+import { cn } from "@/app/lib/utils";
 
 export default function Button({
     children,
@@ -6,7 +6,7 @@ export default function Button({
     ...props
 }: {
     children: React.ReactNode;
-    variant?: "primary" | "secondary" | "ghost";
+    variant?: "primary" | "secondary";
 } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
 
 
