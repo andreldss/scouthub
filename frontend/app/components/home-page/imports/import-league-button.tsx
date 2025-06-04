@@ -10,14 +10,13 @@ export function ImportLeaguesButton({ country }: { country: string }) {
   const handleImport = async () => {
 
     console.log(country)
-    
+
     if (!country) {
-        toast.error(`Nenhum país selecionado!`);
-        return;
+      toast.error(`Nenhum país selecionado!`);
+      return;
     }
 
     const controlRef = doc(collection(db, "import_control"), "leagues");
-
     const controlSnap = await getDoc(controlRef);
     const now = new Date();
 
@@ -30,7 +29,7 @@ export function ImportLeaguesButton({ country }: { country: string }) {
         return;
       }
     }
-        
+
     const loading = toast.loading("Importando ligas...");
 
     try {

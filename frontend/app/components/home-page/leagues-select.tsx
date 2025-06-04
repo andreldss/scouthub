@@ -9,7 +9,7 @@ export function LeagueSelect({ country, onChange }: { country: string; onChange:
 
   const [leagues, setLeagues] = useState<any[]>([]);
 
-  useEffect(() =>{
+  useEffect(() => {
     const fetchLeagues = async () => {
       if (!country) {
         setLeagues([]);
@@ -29,10 +29,10 @@ export function LeagueSelect({ country, onChange }: { country: string; onChange:
         toast.error("Erro ao buscar ligas do país selecionado!");
         console.error(error);
         setLeagues([]);
-      } 
+      }
     }
 
-    fetchLeagues(); 
+    fetchLeagues();
 
   }, [country]);
 
@@ -55,8 +55,7 @@ export function LeagueSelect({ country, onChange }: { country: string; onChange:
       </Select>
       <Toaster
         position="top-right"
-      />   
+      />
     </>
-
   );
 }
