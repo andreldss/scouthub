@@ -4,6 +4,7 @@ import { db } from "@/app/lib/firebase";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { getLeaguesByCountry } from "@/app/api/apiFootball";
 import toast, { Toaster } from "react-hot-toast";
+import { writeBatch } from "firebase/firestore";
 
 export function ImportLeaguesButton({ country }: { country: string }) {
 
@@ -34,6 +35,7 @@ export function ImportLeaguesButton({ country }: { country: string }) {
 
     try {
       const leagues = await getLeaguesByCountry(country);
+      const batch = writeBatch(db);
 
       for (const item of leagues) {
         const league = {
@@ -46,9 +48,11 @@ export function ImportLeaguesButton({ country }: { country: string }) {
           flag: item.country.flag,
         };
 
-        await setDoc(doc(collection(db, "leagues"), String(league.id)), league);
+        const leagueRef = doc(collection(db, "leagues"), String(league.id));
+        batch.set(leagueRef, league, { merge: true });
       }
 
+      await batch.commit();
       await setDoc(controlRef, { lastImport: now })
 
       toast.success(`${leagues.length} ligas importadas com sucesso.`, {
