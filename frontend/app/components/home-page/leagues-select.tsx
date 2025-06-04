@@ -1,5 +1,4 @@
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/app/components/ui/select";
-import { getLeaguesByCountry } from "@/app/api/apiFootball";
 import { useEffect, useState } from "react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "@/app/lib/firebase";
