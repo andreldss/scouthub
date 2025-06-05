@@ -18,3 +18,8 @@ export async function getTeamsByLeague(league: string) {
   const response = await api.get("/teams", { params: { league, season } });
   return response.data.response;
 }
+
+export async function getPlayers(league: string, team?: string, search?: string) {
+  const response = await api.get("/players", { params: { league, team, search, season } });
+  return response.data.response;  
+}
