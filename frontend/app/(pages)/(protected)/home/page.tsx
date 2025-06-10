@@ -23,18 +23,18 @@ export default function Home() {
                 <ImportTeamsButton league={league} />
             </div>
             <div className='flex flex-col gap-2'>
-                <div className='flex flex-row gap-2'>
+                <div className='flex flex-row gap-2 justify-between'>
                     <CountrySelect onChange={(id) => setCountry(id)} />
                     <LeagueSelect country={country} onChange={(id) => setLeague(id)} />
                     <TeamsSelect league={league} onChange={(id) => setTeam(id)} />
-                    <SearchPlayersButton league={league} team={team} search={playerName} onImport={(players) => {console.log(players); setPlayers(players);}}/>
+                    <SearchPlayersButton league={league} team={team} search={playerName} onImport={(players) => { setPlayers(players); }} />
                 </div>
                 <div>
-                    <TextInput placeholder="Nome do jogador (mín. 4 caracteres)" value={playerName} onChange={(e) => setPlayerName(e.target.value)} disabled={!country && !league} className='bg-[#0a0a0a] w-full' />
+                    <TextInput placeholder="Nome do jogador (mín. 4 caracteres)" value={playerName} onChange={(e) => setPlayerName(e.target.value)} disabled={!country && !league} className='border-[#fff] w-full' />
                 </div>
 
                 <div className='mt-8'>
-                    <PlayersContainer />
+                    <PlayersContainer players={players} />
                 </div>
             </div>
         </div>

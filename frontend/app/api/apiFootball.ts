@@ -20,6 +20,21 @@ export async function getTeamsByLeague(league: string) {
 }
 
 export async function getPlayers(league: string, team?: string, search?: string) {
-  const response = await api.get("/players", { params: { league, team, search, season } });
-  return response.data.response;  
+  const players: any[] = []
+  let currentPage = 1;
+  let totalPages = 1;
+
+  do {
+    const response = await api.get("/players", { params: { league, team, search, season, page: currentPage } });
+
+    if (response.data.response) {
+      players.push(...response.data.response)
+    }
+
+    totalPages = response.data.paging?.total || 1;
+    currentPage++;
+  }
+  while (currentPage <= totalPages)
+
+  return players;
 }
