@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 
 export const register = async (name: string, email: string, password: string) => {
@@ -11,6 +11,14 @@ export const register = async (name: string, email: string, password: string) =>
         name,
         email,
         createdAt: new Date(),
+    });
+
+    const listsCollectionRef = collection(db, "users", user.uid, "lists");
+    await addDoc(listsCollectionRef, {
+        name: "Favoritos",
+        isDefault: true,
+        createdAt: serverTimestamp(),
+        players: [],
     });
 
     return user;
