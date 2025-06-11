@@ -40,7 +40,7 @@ export function ListContainer() {
             <h2 className="text-white text-lg font-semibold">Minhas listas</h2>
 
             {lists.map((list) => (
-                <ListCard id={list.id} name={list.name} />
+                <ListCard key={list.id} id={list.id} name={list.name} />
             ))}
 
             <button className="px-4 py-2 bg-gradient-to-br from-green-800 to-emerald-700 rounded text-white cursor-pointer">
