@@ -1,32 +1,37 @@
-import { useState } from "react";
+import { db } from "@/app/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
+import Image from 'next/image'
 
 type ListCardProps = {
     id: string,
+    uid: string; 
     name: string
-    players?: { id: string }[];
+    players?: { id: string, firstName: string, lastName: string, photo: string }[];
 }
 
-export function ListCard({ id, name, players }: ListCardProps) {
+export function ListCard({ id, uid, name, players }: ListCardProps) {
     const [isOpen, setIsOpen] = useState(false)
 
     function handleOpen() {
 
         if (isOpen) {
             setIsOpen(false)
-            console.log('false')
         } else {
             setIsOpen(true)
-            console.log('true')
         }
     }
 
     return (
         <div className="flex flex-col w-full">
-            {isOpen &&
+            {isOpen && 
                 <div>
                     {players?.map((player) => (
-                        <div key={player.id}></div>
+                        <div key={player.id} className="flex flex-row items-center gap-3 bg-[#222]">
+                            <Image src={player.photo} alt='player-photo' height={40} width={40} className='rounded' />
+                            <p className="text-white">{player.firstName} {player.lastName}</p>
+                        </div>
                     ))}
                 </div>
             }

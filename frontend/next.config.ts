@@ -10,7 +10,12 @@ const nextConfig: NextConfig = {
     appId: process.env.appId,
   },
   images: {
-    domains: ["media.api-sports.io"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "media.api-sports.io",
+      },
+    ],
   },
 };
 

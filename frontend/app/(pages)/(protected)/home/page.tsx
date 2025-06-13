@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CountrySelect } from '@/app/components/home-page/country-select';
 import { LeagueSelect } from '@/app/components/home-page/leagues-select';
 import { TeamsSelect } from '@/app/components/home-page/teams-select';
@@ -9,6 +9,10 @@ import { SearchPlayersButton } from '@/app/components/home-page/search-button';
 import { PlayersContainer } from '@/app/components/home-page/players-container';
 import TextInput from '@/app/components/ui/text-input';
 import { ListContainer } from '@/app/components/home-page-lists/lists-container';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/app/lib/firebase';
+import { useRouter } from 'next/navigation';
+import Button from '@/app/components/ui/button';
 
 export default function Home() {
     const [country, setCountry] = useState("");
@@ -16,6 +20,38 @@ export default function Home() {
     const [team, setTeam] = useState("");
     const [playerName, setPlayerName] = useState("")
     const [players, setPlayers] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true)
+    const [uid, setUid] = useState<string | null>(null);
+    const [refreshKey, setRefreshKey] = useState(0);
+    
+    const router = useRouter();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUid(user.uid);
+            } else {
+                setUid(null);
+            }
+            setLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    if (loading) {
+        <div className="flex items-center justify-center h-screen">
+            <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin" />
+        </div>
+    }
+
+    if (!uid) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                {loading ? <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin" /> : <Button onClick={() => router.push('/')}>Ir para o login</Button>}
+            </div>
+        )
+    }
 
     return (
         <div className='flex w-full h-screen flex-col md:flex-row'>
@@ -41,13 +77,13 @@ export default function Home() {
                     </div>
 
                     <div className='mt-8'>
-                        <PlayersContainer players={players} />
+                        <PlayersContainer players={players} onPlayerAdded={() => setRefreshKey(k => k + 1)}/>
                     </div>
                 </div>
             </div>
             <div className="w-full md:w-[25vw] flex flex-col items-center justify-center p-5">
                 <div className='w-full h-full flex flex-col'>
-                    <ListContainer />
+                    <ListContainer uid={uid} refreshKey={refreshKey} />
                 </div>
             </div>
         </div>

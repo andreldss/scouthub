@@ -2,9 +2,10 @@ import { PlayerCard } from "./player-card";
 
 type PlayersContainerProps = {
   players: any[]
+  onPlayerAdded?: () => void;
 }
 
-export function PlayersContainer({ players }: PlayersContainerProps) {
+export function PlayersContainer({ players, onPlayerAdded }: PlayersContainerProps) {
   if (!players.length) return null;
 
   return (
@@ -25,6 +26,7 @@ export function PlayersContainer({ players }: PlayersContainerProps) {
               nationality={player.nationality}
               photo={player.photo}
               position={stat?.games?.position || '-'}
+              onPlayerAdded={onPlayerAdded}
             />
           )
         })}

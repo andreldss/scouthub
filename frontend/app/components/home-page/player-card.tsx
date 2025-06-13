@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import me from '@/public/me.jpeg'
 import Button from '../ui/button';
 import { AiOutlineBarChart } from "react-icons/ai";
 import { useEffect, useState } from 'react';
@@ -17,6 +16,7 @@ type PlayerCardProps = {
   club: string,
   nationality: string,
   photo: string
+  onPlayerAdded?: () => void;
 }
 
 type List = {
@@ -24,7 +24,7 @@ type List = {
   name: string;
 };
 
-export function PlayerCard({ id, firstName, lastName, age, position, club, nationality, photo }: PlayerCardProps) {
+export function PlayerCard({ id, firstName, lastName, age, position, club, nationality, photo, onPlayerAdded  }: PlayerCardProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [lists, setLists] = useState<List[]>([])
   const uid = auth.currentUser?.uid;
@@ -59,11 +59,13 @@ export function PlayerCard({ id, firstName, lastName, age, position, club, natio
     const loading = toast.loading("Adicionando jogador à lista...");
 
     try {
-      await setDoc(doc(db, 'users', uid, 'lists', listId, 'players', String(id)), { playerId: id });
+      await setDoc(doc(db, 'users', uid, 'lists', listId, 'players', String(id)), { playerId: id, firstName, lastName, photo });
       setIsModalOpen(false);
       toast.success(`Jogador adicionado com sucesso!`, {
         id: loading,
       });
+
+      onPlayerAdded?.();
     } catch (error) {
       console.error(error);
       toast.error(`Erro ao adicionar jogador.`, {
