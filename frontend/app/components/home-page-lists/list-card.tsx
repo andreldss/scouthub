@@ -4,7 +4,7 @@ import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 type ListCardProps = {
     id: string,
     name: string
-    players?: { id: string; name: string; photo: string }[];
+    players?: { id: string }[];
 }
 
 export function ListCard({ id, name, players }: ListCardProps) {
@@ -14,8 +14,10 @@ export function ListCard({ id, name, players }: ListCardProps) {
 
         if (isOpen) {
             setIsOpen(false)
+            console.log('false')
         } else {
-           setIsOpen(true) 
+            setIsOpen(true)
+            console.log('true')
         }
     }
 
@@ -24,8 +26,8 @@ export function ListCard({ id, name, players }: ListCardProps) {
             {isOpen &&
                 <div>
                     {players?.map((player) => (
-                        <div key={player.id}>{player.name}</div>
-                    ))}    
+                        <div key={player.id}></div>
+                    ))}
                 </div>
             }
             <div key={id} className="flex flex-row text-white bg-[#222] p-3 rounded w-full cursor-pointer justify-between hover:bg-[#363636] active:bg-[#454545]" onClick={handleOpen}>
