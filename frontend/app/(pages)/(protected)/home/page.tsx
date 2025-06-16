@@ -56,8 +56,8 @@ export default function Home() {
     return (
         <div className='flex w-full h-screen flex-col md:flex-row'>
             <div className="w-full md:w-[25vw] flex flex-col items-center justify-center p-5">
-                <div className='w-full h-full flex flex-col bg-[#fff] rounded'>
-
+                <div className='w-full h-full flex flex-col rounded'>
+                    
                 </div>
             </div>
             <div className="w-full md:w-[50vw] flex flex-col gap-2 items-center justify-center">

@@ -101,7 +101,7 @@ export function PlayerCard({ id, firstName, lastName, age, position, club, natio
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <h2 className="text-white text-lg mb-4">Adicionar {firstName} a uma lista:</h2>
         {lists && lists.map((list) => (
-          <div key={list.id} className='flex flex-col gap-3 w-full'>
+          <div key={list.id} className='flex flex-col mt-3 w-full'>
             <Button variant='secondary' className='w-full' onClick={() => handleAddToList(list.id)}>{list.name}</Button>
           </div>
         ))}
