@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 type Prop ={
     uid: string;
     refreshKey: number;
+    setRefreshKey: (value: (prev: number) => number) => void;
 }
 
 type List = {
@@ -19,7 +20,7 @@ type List = {
     players?: { id: string, firstName: string, lastName: string, photo: string }[];
 };
 
-export function ListContainer({ uid, refreshKey }: Prop) {
+export function ListContainer({ uid, refreshKey, setRefreshKey }: Prop) {
 
     const [lists, setLists] = useState<List[]>([]);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -71,8 +72,13 @@ export function ListContainer({ uid, refreshKey }: Prop) {
 
         if (exists) return toast.error("Nome ja utilizado em uma lista!");
 
-        await addDoc(collection(db, "users", uid, "lists"), {name: listName, createdAt: serverTimestamp(),isDefault: false,});
-
+        try {
+            await addDoc(collection(db, "users", uid, "lists"), {name: listName, createdAt: serverTimestamp(),isDefault: false,});
+        } catch(err) {
+            console.log(err)
+            toast.error('Erro ao incluir lista!')
+        }
+        
         setListName('');
         setIsModalOpen(false);
         toast.success('Lista criada com sucesso!');
@@ -84,7 +90,7 @@ export function ListContainer({ uid, refreshKey }: Prop) {
                 <h2 className="text-white text-lg font-semibold">Minhas listas</h2>
 
                 {lists.map((list) => (
-                    <ListCard key={list.id} id={list.id} uid={uid} name={list.name} players={list.players} />
+                    <ListCard key={list.id} id={list.id} uid={uid} name={list.name} players={list.players} isDefault={list.isDefault} setRefreshKey={setRefreshKey}/>
                 ))}
 
                 <button className="px-4 py-2 bg-gradient-to-br from-green-800 to-emerald-700 rounded text-white cursor-pointer" onClick={() => setIsModalOpen(true)}>

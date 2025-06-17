@@ -24,7 +24,7 @@ type List = {
   name: string;
 };
 
-export function PlayerCard({ id, firstName, lastName, age, position, club, nationality, photo, onPlayerAdded  }: PlayerCardProps) {
+export function PlayerCard({ id, firstName, lastName, age, position, club, photo, onPlayerAdded  }: PlayerCardProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [lists, setLists] = useState<List[]>([])
   const uid = auth.currentUser?.uid;

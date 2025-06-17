@@ -83,7 +83,7 @@ export default function Home() {
             </div>
             <div className="w-full md:w-[25vw] flex flex-col items-center justify-center p-5">
                 <div className='w-full h-full flex flex-col'>
-                    <ListContainer uid={uid} refreshKey={refreshKey} />
+                    <ListContainer uid={uid} refreshKey={refreshKey} setRefreshKey={setRefreshKey} />
                 </div>
             </div>
         </div>
