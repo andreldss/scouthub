@@ -5,9 +5,10 @@ import { AiOutlineDelete } from "react-icons/ai";
 import Modal from "../ui/modal";
 import Button from "../ui/button";
 import toast from "react-hot-toast";
-import { addDoc, deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/app/lib/firebase";
 import { AiOutlineFolderOpen } from "react-icons/ai";
+import { AiOutlineBarChart } from "react-icons/ai";
 
 
 type ListCardProps = {
@@ -77,6 +78,7 @@ export function ListCard({ id, uid, name, players, isDefault, setRefreshKey }: L
                                     <p className="text-white">{player.firstName} {player.lastName}</p>
                                 </div>
                                 <div className="flex text-white gap-3 text-xl">
+                                    <AiOutlineBarChart className='cursor-pointer' />
                                     <AiOutlineFolderOpen className='cursor-pointer' onClick={()=> {setIsModalOpen(true); setModalOpened('add-media')}} />
                                     <AiOutlineDelete className='cursor-pointer' onClick={()=> {setIsModalOpen(true); setModalOpened('delete-player'); setPlayerDeleted(player.id)}} />
                                 </div>
