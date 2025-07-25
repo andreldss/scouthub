@@ -29,8 +29,6 @@ The ultimate goal is to create an analysis tool that allows users to:
 - 🆚 Compare players side-by-side using math-based models
 - 📈 Use visual components like radar charts and bar graphs
 
----
-
 ## 🔧 Planned Technologies
 
 - **Framework:** Next.js
